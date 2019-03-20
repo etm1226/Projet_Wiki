@@ -1,0 +1,61 @@
+Dans le cadre du projet d’intégration de l’infrastructure ‘administration interne des services mutualisés.
+Il a été demandé entre autres le déploiement d’un wiki qui permet de centraliser l’ensemble des wikis existants.
+Afin de répondre au plus près des besoins en termes de fonctionnalité, d’accessibilité et e sécurité.
+Dans un premier temps notre choix c’est porté sur les wikis suivants que nous allons tester pour être le proche de nos besoins.
+ 
+
+
+Les tests vont être réalisés dans un environnement Linux CentOS 7
+Test de fonctionnalité :
+Export multi format :
+Segmentation de l’information 
+Thématique :
+Catégories :
+Sécurité :
+Authentification  Via (Ldap)
+ 
+ 
+
+ 
+Actions :
+Installation de la VM test CentOS 7
+Hostname: VM_Master_Test
+Login: root 
+Password: kscroot
+-----
+Déploiement Xwiki :
+Prérequis :
+Récupération des sources :  https://www.xwiki.com/fr/#
+La source est au format .jar
+Pour l’installer il faut lancer la commande
+Java -jar xwiki-enterprise-installer-generic-8.4.4-standar.jar
+Puis suivre les étapes.
+Lancer le wiki :  firefox http://localhost : 8080
+Test de fonctionnalité :
+Export PDF  ok
+Export OpenOffice (Doc., nécessite l’installation OpenOffice au préalable)  Non tester
+             Segmentation de l’information OK (Création page, article, tableau de bord, wiki) 
+             Par Thématique  OK
+Par Catégories  Ok 
+
+Sécurité : 
+	Authentification Backends (Ldap) A tester
+	Authentification local compte avec privilège  Ok
+
+
+Divergence :
+	Xwiki Web server et base de données spécifiques 
+	Mediawiki
+	PHPwiki
+               
+
+Eléments de configuration :
+Accès BDD :
+Connector  JDBC 
+Création de la Bdd
+Récupération de la source  extension Xwiki
+Paramétrage de la cong servlet 
+\webapps\xwiki\WEB-INF\lib \ibernate.cfg.xm
+
+Authentification Ldap
+
