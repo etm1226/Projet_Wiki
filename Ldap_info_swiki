@@ -1,0 +1,285 @@
+Le lien pour ajouter et configurer une extention LDAP:
+https://extensions.xwiki.org/xwiki/bin/view/Extension/LDAP/Authenticator/#HGenericLDAPconfiguration
+###################################################################
+
+
+
+Description
+If you're interested in connecting XWiki with Active Directory you may be interested in the Active Directory Application, which is a paying application dedicated to simplifying the integration of Active Directory with XWiki. Otherwise you can install this generic LDAP extension and configure it for Active Directory.
+Release notes can be found on LDAP project page.
+
+In order to use the LDAP Application (which provides a more visual way to configure LDAP) then you need to set the xwiki.authentication.authclass and the xwiki.authentication.ldap.trylocal properties, the rest can be set using the UI. Unlike editing xwiki.cfg, LDAP Application allows you to make changes without restarting the application server.
+
+Generic LDAP configuration
+In order to enable the LDAP support you have to change the authentication method in WEB-INF/xwiki.cfg as follows:
+
+#-# LDAP authentication service
+xwiki.authentication.authclass=org.xwiki.contrib.ldap.XWikiLDAPAuthServiceImpl
+
+#-# Turn LDAP authentication on - otherwise only XWiki authentication
+#-# - 0: disable
+#-# - 1: enable
+#-# The default is 0
+xwiki.authentication.ldap=1
+
+#-# Enable local accounts in addition to LDAP.
+#-# Without this setting you will be unable to log into XWiki with local accounts.
+#-# - 0: disable
+#-# - 1: enable
+#-# The default is 0
+xwiki.authentication.ldap.trylocal=1
+You can setup the LDAP configuration in the xwiki.cfg file by filling the following properties:
+
+#-# Turn LDAP authentication on - otherwise only XWiki authentication
+#-# - 0: disable
+#-# - 1: enable
+#-# The default is 0
+xwiki.authentication.ldap=1
+
+#-# LDAP Server (Active Directory, eDirectory, OpenLDAP, etc.)
+#-# The default host is localhost
+xwiki.authentication.ldap.server=localhost
+#-# The default port is 389 (636 if xwiki.authentication.ldap.ssl is enabled)
+# xwiki.authentication.ldap.port=389
+
+#-# LDAP credentials, empty = anonymous access, otherwise specify full dn
+#-# {0} is replaced with the user name, {1} with the password
+xwiki.authentication.ldap.bind_DN=cn={0},department=USER,department=INFORMATIK,department=1230,o=MP
+xwiki.authentication.ldap.bind_pass={1}
+
+#-# The Base DN used in LDAP searches
+xwiki.authentication.ldap.base_DN=
+
+#-# LDAP query to search the user in the LDAP database (in case a static admin user is provided in
+#-# xwiki.authentication.ldap.bind_DN)
+#-# {0} is replaced with the user uid field name and {1} with the user name
+#-# The default is ({0}={1})
+# xwiki.authentication.ldap.user_search_fmt=({0}={1})
+
+#-# Only members of the following group can authenticate.
+#-# The following kind of groups are supported:
+#-# * LDAP static groups (users/subgroups are listed statically in the group object)
+#-# * [Since 3.3M1] LDAP organization units (users/subgroups are sub object of the provided organization unit)
+#-# * [Since 3.3M1] LDAP filter (users/groups are object found in a search with the provided filter)
+# xwiki.authentication.ldap.user_group=cn=developers,ou=groups,o=MegaNova,c=US
+
+#-# [Since 1.5RC1]
+#-# Only users not member of the following group can authenticate.
+#-# The following kind of groups are supported:
+#-# * LDAP static groups (users/subgroups are listed statically in the group object)
+#-# * [Since 3.3M1] LDAP organization units (users/subgroups are sub object of the provided organization unit)
+#-# * [Since 3.3M1] LDAP filter (users/groups are object found in a search with the provided filter)
+# xwiki.authentication.ldap.exclude_group=cn=admin,ou=groups,o=MegaNova,c=US
+
+#-# Specifies the LDAP attribute containing the identifier to be used as the XWiki name
+#-# The default is cn
+# xwiki.authentication.ldap.UID_attr=cn
+
+#-# [Since 1.5M1]
+#-# The potential LDAP groups classes. Separated by commas.
+#-# The default is group,groupOfNames,groupOfUniqueNames,dynamicGroup,dynamicGroupAux,groupWiseDistributionList,posixGroup,apple-group
+# xwiki.authentication.ldap.group_classes=group,groupOfNames,groupOfUniqueNames,dynamicGroup,dynamicGroupAux,groupWiseDistributionList,posixGroup,apple-group
+
+#-# [Since 1.5M1]
+#-# The potential names of the LDAP groups fields containings the members. Separated by commas.
+#-# The default is member,uniqueMember,memberUid
+# xwiki.authentication.ldap.group_memberfields=member,uniqueMember,memberUid
+
+#-# Retrieve the following fields from LDAP and store them in the XWiki user object (xwiki-attribute=ldap-attribute)
+#-# By default the list is empty
+xwiki.authentication.ldap.fields_mapping=last_name=sn,first_name=givenName,email=mail
+
+#-# [Since 1.3M2]
+#-# On every authentication update the mapped attributes from LDAP to XWiki otherwise this happens only once when the XWiki
+#-# account is created.
+#-# - 0: only when creating user
+#-# - 1: at each authentication
+#-# The default is 0
+xwiki.authentication.ldap.update_user=1
+
+#-# [Since 8.1M2]
+#-# On every authentication update photo from LDAP to XWiki avatar otherwise photo will not be updated.
+#-# - 0: never
+#-# - 1: at each authentication
+#-# The default is 0
+# xwiki.authentication.ldap.update_photo=0
+
+#-# [Since 8.1M2]
+#-# Profile attachment name which will be used to save LDAP photo.
+#-# The default is ldapPhoto
+# xwiki.authentication.ldap.photo_attachment_name=ldapPhoto
+
+#-# [Since 8.1M2]
+#-# Specifies the LDAP attribute containing the binary photo
+#-# The default is thumbnailPhoto
+# xwiki.authentication.ldap.photo_attribute=thumbnailPhoto
+
+#-# [Since 1.3M2]
+#-# Maps XWiki groups to LDAP groups, separator is "|".
+#-# The following kind of groups are supported:
+#-# * LDAP static groups (users/subgroups are listed statically in the group object)
+#-# * [Since 3.3M1] LDAP organization units (users/subgroups are sub object of the provided organization unit)
+#-# * [Since 3.3M1] LDAP filter (users/groups are object found in a search with the provided filter),
+#-#   | character in the filter need to be escaped with backslash (\).
+#-#
+#-# Here is an example:
+# xwiki.authentication.ldap.group_mapping=XWiki.XWikiAdminGroup=cn=AdminRole,ou=groups,o=domain,c=com|\
+#                                         XWiki.LDAPUsers=ou=groups,o=domain,c=com|\
+#                                         XWiki.Organisation=(cn=testers)
+
+#-# [Since 1.3M2]
+#-# Time in s after which the list of members in a group is refreshed from LDAP
+#-# The default is 21600 (6 hours)
+# xwiki.authentication.ldap.groupcache_expiration=21600
+
+#-# [Since 1.3M2]
+#-# - create : synchronize group membership only when the user is first created
+#-# - always: synchronize on every authentication
+#-# The default is always
+# xwiki.authentication.ldap.mode_group_sync=always
+
+#-# [Since 7.2M3]
+#-# Indicate groups members should be resolved in case they are subgroups.
+#-# Doing so can be very expensive so it should be disabled if you know there is no subgroups
+#-# (or if you don't care about them).
+#-# If the group is actually a filter it will always be resolved since it does not make sense left alone.
+#-# - 0: disable
+#-# - 1: enable
+#-# The default is 1
+# xwiki.authentication.ldap.group_sync_resolve_subgroups=0
+
+#-# [Since 1.3M2]
+#-# SSL connection to LDAP server
+#-# - 0: normal
+#-# - 1: SSL
+#-# The default is 0
+# xwiki.authentication.ldap.ssl=0
+
+#-# [Since 1.3M2]
+#-# The keystore file to use in SSL connection
+# xwiki.authentication.ldap.ssl.keystore=
+
+#-# [Since 1.5M1]
+#-# The java secure provider used in SSL connection
+#-# The default is com.sun.net.ssl.internal.ssl.Provider
+# xwiki.authentication.ldap.ssl.secure_provider=com.sun.net.ssl.internal.ssl.Provider
+
+#-# Bypass standard LDAP bind validation by doing a direct password comparison.
+#-# If you don't know what you do, don't use that. It's covering very rare and bad use cases.
+#-# - 0: disable
+#-# - 1: enable
+#-# The default is 0
+# xwiki.authentication.ldap.validate_password=0
+
+#-# [Since 1.5M1]
+#-# Specifies the LDAP attribute containing the password to be used "when xwiki.authentication.ldap.validate_password"
+#-# is set to 1
+# xwiki.authentication.ldap.password_field=userPassword
+
+#-# [Since 4.3M1]
+#-# The maximum number of milliseconds the client waits for any operation under these constraints to complete.
+#-# The default is 1000
+# xwiki.authentication.ldap.timeout=1000
+
+#-# [Since 6.3M1]
+#-# The maximum number of search results to be returned from a search operation.
+#-# The default is 1000
+# xwiki.authentication.ldap.maxresults=1000
+
+#-# [Since 9.1]
+#-# An HTTP Header to be use as the authenticated remote user input (in place of using the default authenticated user reported by the servlet container)
+#-# WARNING: Enabling this feature without ensuring the validity of transmitted headers is very insecure.
+#-#
+#-# In this example, the authenticated user will be taken from the HTTP header REMOTE_USER:
+# xwiki.authentication.ldap.httpHeader=REMOTE_USER
+
+#-# [Since 9.0]
+#-# A Java regexp used to parse the remote user provided by JAAS.
+#-# 
+#-# The following matches the users like UID@DOMAIN:
+# xwiki.authentication.ldap.remoteUserParser=(.+)@(.+)
+
+#-# [Since 9.0]
+#-# Indicate which of the regexp group correspond to which LDAP properties.
+#-# The following LDAP properties are reserved (any other property can be defined as variable for xwiki.authentication.trustedldap.userPageName):
+#-#   * uid: the uid of the user
+#-#   * password: the password of the user
+#-#   * all the non multidomain related properties with "ldap_" prefix (ldap_server, ldap_port, ldap_base_DN, etc.) 
+#-# 
+#-# The following indicate that the first regexp group is associated to the uid:
+# xwiki.authentication.ldap.remoteUserMapping.1=uid
+#-# The following indicate that the second regexp group is associated everything else we want to make different based on the domain (the mapping is then used to indicate which is the value for each property):
+# xwiki.authentication.ldap.remoteUserMapping.2=domain,ldap_server,ldap_port,ldap_base_DN,ldap_bind_DN,ldap_bind_pass,ldap_group_mapping
+
+#-# [Since 9.0]
+#-# Indicate how to convert each found property. If a property is not set, the standard LDAP authenticator setup is used.
+#-# 
+#-# Here is an example mapping each of the domains MYDOMAIN and MYDOMAIN2 to specific properties:
+# xwiki.authentication.ldap.remoteUserMapping.ldap_server=MYDOMAIN=my.domain.com|MYDOMAIN2=my.domain2.com
+# xwiki.authentication.ldap.remoteUserMapping.ldap_port=MYDOMAIN=388|MYDOMAIN2=387
+# xwiki.authentication.ldap.remoteUserMapping.ldap_base_DN=MYDOMAIN=dc=my,dc=domain,dc=com|MYDOMAIN2=dc=my,dc=domain2,dc=com
+# xwiki.authentication.ldap.remoteUserMapping.ldap_bind_DN=MYDOMAIN=cn=bind,dc=my,dc=domain,dc=com|MYDOMAIN2=cn=bind,dc=my,dc=domain2,dc=com
+# xwiki.authentication.ldap.remoteUserMapping.ldap_bind_pass=MYDOMAIN=password|MYDOMAIN2=password2
+# xwiki.authentication.ldap.remoteUserMapping.ldap_group_mapping=MYDOMAIN=XWiki.Admin=cn=admin,dc=my,dc=domain,dc=com\\|XWiki.LDAPUsers=ou=groups,o=domain,c=com|MYDOMAIN2=XWiki.Admin=cn=admin,dc=my,dc=domain2,dc=com\\|XWiki.LDAPUsers=ou=groups,o=domain2,c=com
+
+#-# [Since 9.0]
+#-# The XWiki page name pattern.
+#-# Can use xwiki.authentication.ldap.remoteUserParser group or a properties defined in xwiki.authentication.trustedldap.remoteUserMapping.
+#-# The supported syntax is org.apache.commons.lang3.text.StrSubstitutor one,
+#-# see http://commons.apache.org/proper/commons-lang/javadocs/api-3.0/org/apache/commons/lang3/text/StrSubstitutor.html for more details.
+#-# The default is "${uid}".
+#-# 
+#-# In this example the XWiki user profile page name will be of the form MYDOMAIN-myuid
+# xwiki.authentication.ldap.userPageName=${domain}-${uid}
+
+#-# [Since 9.0]
+#-# The list of authentication inputs for which user profile should also be searched based on uid.
+#-# You can use this property as retro-compatibility when upgrading a setup that used to be targeting a single LDAP server.
+#-# An alternative is to change the uid in all the existing users to make sure it contains complete input instead.
+#-# 
+#-# In this example the authenticator will try to find existing users from domain MYDOMAIN with only the uid when it can't find one with the complete input:
+# xwiki.authentication.ldap.testLoginFor=${uid}@MYDOMAIN,${uid}@ANOTHERDOMAIN
+
+#-# [Since 9.3]
+#-# The maximum number of results to receive at the same time in a pages search (for example when searching group members).
+#-# The default is 500.
+#-# 
+# xwiki.authentication.ldap.searchPageSize=500
+It's also possible to put any of theses configuration in the XWiki.XWikiPreferences object in the XWiki.XWikiPreferences page. Add a string field with the proper name to the class and put the value you want.
+
+The fields names are not exactly the same, you have to change "xwiki.authentication.ldap." prefix to "ldap_":
+
+For example xwiki.authentication.ldap.base_DN becomes ldap_base_DN.
+
+LDAP clients
+For testing purposes, you may wish to omit the "ldap.fields_mapping" field, to test the authentication first, and then add it later to get the mappings right.
+
+Here are some LDAP clients for checking your configuration:
+
+Extensions:
+
+LDAP query snippet
+Java based and Open Source:
+
+Apache Directory Studio
+JXplorer
+Windows only:
+
+Softerra LDAP Browser
+Detailed use cases
+See the LDAP configuration uses cases for some detailed use cases.
+
+Enable LDAP debug log
+See Logging.
+
+The specific packages to track for LDAP is org.xwiki.contrib.ldap. There is several ways to enable debug log.
+
+With the Logging Admin UI
+Use Logging Admin UI from the Administration section, add set TRACE or DEBUG level classes located in package org.xwiki.contrib.ldap.
+
+Anything you set trough the Logging Administration won't be remembered after a restart.
+With the Logback configuration file
+You need to add the following in WEB-INF/classes/logback.xml:
+
+<!-- LDAP debugging -->
+<logger name="org.xwiki.contrib.ldap" level="trace"/>
