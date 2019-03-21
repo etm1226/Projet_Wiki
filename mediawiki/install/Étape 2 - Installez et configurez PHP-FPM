@@ -1,0 +1,8 @@
+Dans ce tutoriel, nous utiliserons PHP 7.0. Et ici, dans cette étape, nous allons installer PHP 7.0 
+(y compris les extensions) et configurer PHP-FPM pour l’installation de MediaWiki.
+Nous utiliserons les packages PHP 7.0 du référentiel tiers 'webtatic'.
+ Ajoutez un nouveau référentiel 'webtatic' pour l'installation de PHP 7.0 à l'aide de la commande ci-dessous.
+ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+ Maintenant, nous pouvons installer PHP 7.0 avec toutes les extensions nécessaires en utilisant la commande yum ci-dessous.
+ yum -y install ImageMagick php70w-fpm php70w-intl php70w-xml php70w-curl \
+ php70w-gd php70w-mbstring php70w-mysql php70w-cli php70w-pear php70w-pecl-apcu
