@@ -1,1 +1,11 @@
-
+yum -y install mariadb mariadb-server
+systemctl start mariadb
+systemctl enable mariadb
+mysql_secure_installation
+Tapez 'Y' et appuyez sur Entrée  et créé la mot de passe de la base pour l'utilisateur root
+Connection à la base avec l'utilisateur root
+mysql -u root -p
+create database mediawikidb;
+grant all privileges on mediawikidb.* to mediawikiUser@'localhost' identified by 'mediawiki';
+flush privileges;
+exit;
