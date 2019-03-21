@@ -6,3 +6,27 @@ Nous utiliserons les packages PHP 7.0 du référentiel tiers 'webtatic'.
  Maintenant, nous pouvons installer PHP 7.0 avec toutes les extensions nécessaires en utilisant la commande yum ci-dessous.
  yum -y install ImageMagick php70w-fpm php70w-intl php70w-xml php70w-curl \
  php70w-gd php70w-mbstring php70w-mysql php70w-cli php70w-pear php70w-pecl-apcu
+###
+Configuration PHP:
+vim /etc/php.ini
+Décommentez la ligne ci-dessous et remplacez la valeur par 0.
+cgi.fix_pathinfo=1
+Sauvegader et sortir 
+Maintenant, éditez le fichier de configuration PHP-FPM 'www.conf'.
+vim /etc/php-fpm.d/www.conf
+Modifiez la valeur de la ligne utilisateur et groupe en "nginx".
+user = nginx
+group = nginx
+Changez maintenant la valeur de la variable 'listen' dans le fichier 'php-fpm.sock', comme indiqué ci-dessous.
+listen = /run/php-fpm/php-fpm.sock
+Autorisation: Décommentez les lignes listen.owner et listen.group, puis modifiez les valeurs correspondantes en "nginx".
+listen.owner = nginx
+listen.group =nginx
+listen.mode = 0660
+Ajout de l'environnement cidessous:
+env[HOSTNAME] = $HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+Sauvegarder et sortir
