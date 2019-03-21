@@ -30,3 +30,8 @@ env[TMP] = /tmp
 env[TMPDIR] = /tmp
 env[TEMP] = /tmp
 Sauvegarder et sortir
+Création du répertoire de session:
+mkdir -p /var/lib/php/session/ && chown -R nginx:nginx /var/lib/php/session/
+Démarrage du service PHP-FPM et activation automatique lors du boot systéme
+systemctl start php-fpm
+systemctl enable php-fpm
