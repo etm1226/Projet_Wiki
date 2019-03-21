@@ -8,3 +8,4 @@ systemctl enable nginx
 Le serveur Web Nginx a donc été installé sur le serveur CentOS 7. Vérifiez les statistiques du réseau à l'aide de la commande netstat, 
 et vous obtiendrez le port HTTP utilisé par le service Nginx.
 netstat -plntu
+Identifier la ligne xxxx/nginx: master
