@@ -1,0 +1,10 @@
+Mettez à jour tous les packages et installez le référentiel EPEL dans le système CentOS 7 à l'aide de la commande yum ci-dessous.
+yum -y update
+yum -y install epel-release
+yum -y install nginx
+Une fois l’installation de Nginx terminée, démarrez le serveur et activez-le pour s’exécuter automatiquement au démarrage du système.
+systemctl start nginx
+systemctl enable nginx
+Le serveur Web Nginx a donc été installé sur le serveur CentOS 7. Vérifiez les statistiques du réseau à l'aide de la commande netstat, 
+et vous obtiendrez le port HTTP utilisé par le service Nginx.
+netstat -plntu
