@@ -35,3 +35,5 @@ mkdir -p /var/lib/php/session/ && chown -R nginx:nginx /var/lib/php/session/
 Démarrage du service PHP-FPM et activation automatique lors du boot systéme
 systemctl start php-fpm
 systemctl enable php-fpm
+Check PHP-FPM 
+netstat -pl | grep php
