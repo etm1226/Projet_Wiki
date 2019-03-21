@@ -1,0 +1,71 @@
+Sur Linux:
+Installer le git:
+Yum install git  sur centos
+apt-get install git  sur debian et autre versant .deb
+
+########
+Sur Windows
+Depuis  http://msysgit.github.io et téléchargez la dernière version disponible
+ lancez-le et suive les instructions par default puis lancer le git Bash qui se trouve dans le démarrer
+
+Actions 
+
+Linux ou la console git Bash sur Windows.
+
+Commande suivante pour définir nom et l’email que tu as utilisé pour créer ton compte gratuit sur GitHub:
+git config --global user.name "ton_matricule"
+git config --global user.email "Ton@email.atos.net"
+
+
+Pour activer un dossier comme repository Git  git init
+
+mkdir Projet_wiki
+cd Projet_wiki
+
+git init
+
+touch fichier
+
+git add fichier
+
+git status ==> pour voir l'etat du fichier
+
+git commit -m "mon commentaire Ajout du fichier par exemple"
+
+Puis a chaque modification de fichier faire
+
+git commit -a -m "commentaire sur la modification"
+
+ l’option -a signifie que le fichier est déjà ajouté dans git pas besoin de faire un git add
+
+
+
+git log ⇒ pour voir l’historie
+Pour quitter le log ‘q’
+
+Se positionner sur un commit
+Identifier le sha avec un git log
+Puis faire un
+git checkout SHA
+
+Le SHA est un identifant unique 
+
+
+
+pour venir sur la branche principal
+git checkout master
+
+
+pour récupérer un repositorie
+git clone https://github.com/facebook/react.git
+
+envoyer du code vers github
+git push origin master
+
+Récupérer les motif réaliser sur GitHub
+
+git pull origne master
+
+
+
+
